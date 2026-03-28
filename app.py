@@ -18,8 +18,8 @@ from pathlib import Path
 from typing import Any, Dict, Optional
 
 import uvicorn
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import FileResponse, JSONResponse
 from openai import OpenAI
 from pydantic import BaseModel
 
@@ -201,6 +201,138 @@ def state():
         return env.state()
     except RuntimeError as exc:
         raise HTTPException(status_code=400, detail=str(exc))
+
+
+@app.get("/metadata", tags=["openenv"])
+def metadata():
+    """OpenEnv required: returns environment name and description."""
+    return {
+        "name":        "email-triage-env",
+        "version":     "1.0.0",
+        "description": (
+            "A real-world OpenEnv environment simulating customer support email triage. "
+            "Agents classify emails, extract ticket metadata, and draft professional responses."
+        ),
+        "author":  "ScalarHackathon Team",
+        "tasks":   [t.value for t in TaskID],
+        "license": "MIT",
+    }
+
+
+@app.get("/schema", tags=["openenv"])
+def schema():
+    """OpenEnv required: returns action, observation, and state schemas."""
+    return {
+        "action": {
+            "email_classify": {
+                "type": "object",
+                "required": ["category", "urgency"],
+                "properties": {
+                    "category": {"type": "string", "enum": ["billing", "technical", "shipping", "general", "spam"]},
+                    "urgency":  {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+                    "reasoning": {"type": "string"},
+                }
+            },
+            "ticket_extraction": {
+                "type": "object",
+                "required": ["customer_name", "issue_summary", "product_mentioned", "resolution_needed", "estimated_effort"],
+                "properties": {
+                    "customer_name":     {"type": "string"},
+                    "issue_summary":     {"type": "string"},
+                    "product_mentioned": {"type": "string"},
+                    "resolution_needed": {"type": "string"},
+                    "estimated_effort":  {"type": "string", "enum": ["quick", "medium", "extensive"]},
+                    "reasoning":         {"type": "string"},
+                }
+            },
+            "response_drafting": {
+                "type": "object",
+                "required": ["response_subject", "response_body", "internal_note", "escalate"],
+                "properties": {
+                    "response_subject": {"type": "string"},
+                    "response_body":    {"type": "string"},
+                    "internal_note":    {"type": "string"},
+                    "escalate":         {"type": "boolean"},
+                    "reasoning":        {"type": "string"},
+                }
+            }
+        },
+        "observation": {
+            "type": "object",
+            "properties": {
+                "task":        {"type": "string"},
+                "step_index":  {"type": "integer"},
+                "total_steps": {"type": "integer"},
+                "score_so_far":{"type": "number"},
+                "email":       {"type": "object", "description": "Present in email_classify task"},
+                "thread":      {"type": "array",  "description": "Present in ticket_extraction and response_drafting tasks"},
+                "customer_history":  {"type": "object", "description": "Present in response_drafting task"},
+                "policy_snippets":   {"type": "array",  "description": "Present in response_drafting task"},
+            }
+        },
+        "state": {
+            "type": "object",
+            "properties": {
+                "task":             {"type": "string"},
+                "step_index":       {"type": "integer"},
+                "total_steps":      {"type": "integer"},
+                "cumulative_score": {"type": "number"},
+                "done":             {"type": "boolean"},
+                "history":          {"type": "array"},
+            }
+        }
+    }
+
+
+@app.post("/mcp", tags=["openenv"])
+async def mcp_endpoint(request: Request):
+    """OpenEnv required: MCP (Model Context Protocol) JSON-RPC 2.0 endpoint."""
+    try:
+        body = await request.json()
+    except Exception:
+        body = {}
+
+    method  = body.get("method", "")
+    req_id  = body.get("id", 1)
+    jsonrpc = "2.0"
+
+    # Handle standard MCP methods
+    if method == "initialize":
+        result = {
+            "protocolVersion": "2024-11-05",
+            "capabilities": {"tools": {}},
+            "serverInfo": {"name": "email-triage-env", "version": "1.0.0"},
+        }
+    elif method == "tools/list":
+        result = {
+            "tools": [
+                {
+                    "name": "reset",
+                    "description": "Start a new episode for a given task",
+                    "inputSchema": {
+                        "type": "object",
+                        "properties": {
+                            "task": {"type": "string", "enum": ["email_classify", "ticket_extraction", "response_drafting"]},
+                            "seed": {"type": "integer"},
+                        },
+                        "required": ["task"],
+                    }
+                },
+                {
+                    "name": "step",
+                    "description": "Submit one action and receive reward + next observation",
+                    "inputSchema": {
+                        "type": "object",
+                        "properties": {"action": {"type": "object"}},
+                        "required": ["action"],
+                    }
+                },
+            ]
+        }
+    else:
+        result = {"message": "ok", "env": "email-triage-env"}
+
+    return JSONResponse({"jsonrpc": jsonrpc, "id": req_id, "result": result})
 
 
 @app.get("/openenv.yaml", tags=["spec"])
