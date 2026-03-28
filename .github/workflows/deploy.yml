@@ -1,0 +1,24 @@
+name: Deploy to Hugging Face Spaces
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          lfs: true
+
+      - name: Push to Hugging Face Spaces
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git config --global user.email "deploy@github-actions.com"
+          git config --global user.name "GitHub Actions"
+          git push https://Ananthsharma-hf:${HF_TOKEN}@huggingface.co/spaces/Ananthsharma-hf/email-triage-env main --force
