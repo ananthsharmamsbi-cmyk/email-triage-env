@@ -1,0 +1,359 @@
+{
+  "task1_classify": [
+    {
+      "email": {
+        "message_id": "msg_001",
+        "sender": "john.smith@example.com",
+        "subject": "Invoice #INV-2024-0892 is incorrect",
+        "body": "Hi Support,\n\nI received my invoice for this month and the amount charged ($199) does not match what I agreed to when I signed up ($149/month). I need this corrected immediately and a refund issued for the difference. My account number is ACC-48291.\n\nThanks,\nJohn Smith",
+        "timestamp": "2024-03-15T09:23:00Z",
+        "metadata": {"customer_id": "cust_48291", "account_tier": "pro"}
+      },
+      "label": {"category": "billing", "urgency": "high"}
+    },
+    {
+      "email": {
+        "message_id": "msg_002",
+        "sender": "priya.k@techcorp.io",
+        "subject": "API rate limit exceeded — production is down",
+        "body": "URGENT: Our production environment is returning 429 errors from your API starting at 08:45 UTC. We have not changed our request volume. This is causing a complete outage for our end customers. Need immediate assistance.\n\nError details: HTTP 429 Too Many Requests, Retry-After: 3600\nAccount: techcorp-enterprise-01",
+        "timestamp": "2024-03-15T08:52:00Z",
+        "metadata": {"customer_id": "cust_tc01", "account_tier": "enterprise"}
+      },
+      "label": {"category": "technical", "urgency": "critical"}
+    },
+    {
+      "email": {
+        "message_id": "msg_003",
+        "sender": "newsletter@deals.biz",
+        "subject": "You WON a $1000 gift card — claim NOW!!!",
+        "body": "Congratulations!! You have been selected to receive a $1000 gift card. Click the link below to claim your prize before it expires. This offer is only valid for the next 24 hours!!!\n\nCLAIM NOW: http://totally-legit-prizes.xyz/claim?ref=spam123\n\nDo not reply to this email.",
+        "timestamp": "2024-03-15T07:00:00Z",
+        "metadata": {}
+      },
+      "label": {"category": "spam", "urgency": "low"}
+    },
+    {
+      "email": {
+        "message_id": "msg_004",
+        "sender": "maria.garcia@shop.com",
+        "subject": "Order #ORD-8841 hasn't arrived — it's been 2 weeks",
+        "body": "Hello,\n\nI placed order #ORD-8841 on March 1st and was told it would arrive within 5-7 business days. It is now March 15th and I still haven't received anything. The tracking page just says 'In Transit' with no updates since March 5th. Can you please check what happened to my package?\n\nMaria",
+        "timestamp": "2024-03-15T11:05:00Z",
+        "metadata": {"customer_id": "cust_mg22", "account_tier": "free"}
+      },
+      "label": {"category": "shipping", "urgency": "high"}
+    },
+    {
+      "email": {
+        "message_id": "msg_005",
+        "sender": "david.lee@personal.net",
+        "subject": "Just wondering about your enterprise pricing",
+        "body": "Hi there,\n\nWe're a team of about 50 people and are currently evaluating tools for our workflow. Could you share more details about enterprise pricing and what's included? No rush — just exploring options at this stage.\n\nThanks,\nDavid Lee\nOperations Manager, LeeCo",
+        "timestamp": "2024-03-15T14:30:00Z",
+        "metadata": {}
+      },
+      "label": {"category": "general", "urgency": "low"}
+    },
+    {
+      "email": {
+        "message_id": "msg_006",
+        "sender": "alice.wong@startup.co",
+        "subject": "Webhook not firing after recent update",
+        "body": "Hey support team,\n\nSince yesterday's platform update (v3.2.1), our webhooks for the 'order.completed' event have completely stopped firing. We've verified the endpoint URL and secret are correct. Other webhook types (order.created, payment.received) work fine.\n\nThis is impacting our fulfillment pipeline. Task: please investigate asap.\n\nAlice Wong, StartupCo Engineering",
+        "timestamp": "2024-03-15T10:12:00Z",
+        "metadata": {"customer_id": "cust_aw55", "account_tier": "pro"}
+      },
+      "label": {"category": "technical", "urgency": "high"}
+    },
+    {
+      "email": {
+        "message_id": "msg_007",
+        "sender": "bob.nguyen@bigclient.com",
+        "subject": "Double charged on March 10th",
+        "body": "Hello,\n\nReviewing my bank statement I noticed I was charged twice on March 10th — two charges of $49.99 each. My subscription should only bill once per month. Please refund the duplicate charge.\n\nAccount email: bob.nguyen@bigclient.com\n\nBob",
+        "timestamp": "2024-03-15T13:44:00Z",
+        "metadata": {"customer_id": "cust_bn99", "account_tier": "pro"}
+      },
+      "label": {"category": "billing", "urgency": "medium"}
+    },
+    {
+      "email": {
+        "message_id": "msg_008",
+        "sender": "sarah.jones@edu.org",
+        "subject": "How do I export my data?",
+        "body": "Hi,\n\nI'd like to export all my data from the platform. Could you point me to the right documentation or let me know how to do this? I couldn't find it in the settings menu.\n\nThanks,\nSarah",
+        "timestamp": "2024-03-15T16:00:00Z",
+        "metadata": {"customer_id": "cust_sj11", "account_tier": "free"}
+      },
+      "label": {"category": "general", "urgency": "low"}
+    },
+    {
+      "email": {
+        "message_id": "msg_009",
+        "sender": "noreply@spammers.ru",
+        "subject": "Exclusive business opportunity — $50,000/month from home",
+        "body": "Dear Friend,\n\nI am a Nigerian prince with urgent financial matters. I need your help to transfer $5,000,000 USD out of my country. In return you will receive 30% of the total amount. Please send your bank details to collect your share. God bless you.\n\nPrince Adebayo",
+        "timestamp": "2024-03-15T03:00:00Z",
+        "metadata": {}
+      },
+      "label": {"category": "spam", "urgency": "low"}
+    },
+    {
+      "email": {
+        "message_id": "msg_010",
+        "sender": "carlos.m@retailco.com",
+        "subject": "Wrong item delivered — need return label ASAP",
+        "body": "Hi,\n\nI ordered a Blue XL hoodie (Item #HW-2021-BLU-XL) but received a Red M instead. I have an event tomorrow where I need to wear this item. Please send a return label immediately and expedite the correct item. This is very urgent.\n\nOrder #ORD-9920\nCarlos Martinez",
+        "timestamp": "2024-03-15T17:30:00Z",
+        "metadata": {"customer_id": "cust_cm33", "account_tier": "free"}
+      },
+      "label": {"category": "shipping", "urgency": "critical"}
+    }
+  ],
+
+  "task2_extract": [
+    {
+      "thread": [
+        {
+          "message_id": "thread_001_a",
+          "sender": "lisa.park@acmecorp.com",
+          "subject": "Bulk export feature broken — data integrity concern",
+          "body": "Hi,\n\nOur data analyst Lisa Park (acmecorp.com) has been trying to use the bulk CSV export on our Pro subscription. When exporting more than 10,000 rows, the file downloads as an empty CSV (0 bytes). We rely on this for our weekly reporting pipeline. This needs to be fixed before Friday.\n\nProduct: DataSync Pro\nAccount: acmecorp-pro-2021",
+          "timestamp": "2024-03-14T14:00:00Z",
+          "metadata": {}
+        },
+        {
+          "message_id": "thread_001_b",
+          "sender": "support@ourplatform.com",
+          "subject": "Re: Bulk export feature broken — data integrity concern",
+          "body": "Hi Lisa,\n\nThank you for reaching out. We're looking into this. Could you confirm the exact export parameters you're using (date range, filters applied)?\n\nBest,\nSupport Team",
+          "timestamp": "2024-03-14T15:30:00Z",
+          "metadata": {}
+        },
+        {
+          "message_id": "thread_001_c",
+          "sender": "lisa.park@acmecorp.com",
+          "subject": "Re: Bulk export feature broken — data integrity concern",
+          "body": "Date range: Jan 1–Mar 14, 2024. Filters: status=active, region=all. I tried three times and got empty files every time. The progress bar completes but the file is empty.",
+          "timestamp": "2024-03-14T16:10:00Z",
+          "metadata": {}
+        }
+      ],
+      "label": {
+        "customer_name": "Lisa Park",
+        "issue_summary": "Bulk CSV export produces empty files when exporting more than 10,000 rows on Pro subscription",
+        "product_mentioned": "DataSync Pro",
+        "resolution_needed": "Fix bulk export to correctly generate CSV files for large datasets",
+        "estimated_effort": "medium"
+      }
+    },
+    {
+      "thread": [
+        {
+          "message_id": "thread_002_a",
+          "sender": "mike.turner@freelancer.net",
+          "subject": "Can't login — 2FA code not working",
+          "body": "Hello,\n\nThis is Mike Turner. Since this morning I cannot log into my account. I enter my password correctly but the 2FA code sent to my phone is being rejected as invalid. I've tried 5 times. I have an important client presentation using my files in 2 hours.\n\nEmail: mike.turner@freelancer.net",
+          "timestamp": "2024-03-15T09:00:00Z",
+          "metadata": {}
+        }
+      ],
+      "label": {
+        "customer_name": "Mike Turner",
+        "issue_summary": "Two-factor authentication codes are being rejected, preventing login to account",
+        "product_mentioned": "Account Authentication",
+        "resolution_needed": "Restore account access by fixing or bypassing 2FA verification",
+        "estimated_effort": "quick"
+      }
+    },
+    {
+      "thread": [
+        {
+          "message_id": "thread_003_a",
+          "sender": "procurement@globalretail.com",
+          "subject": "Enterprise contract renewal — pricing discrepancy",
+          "body": "To Whom It May Concern,\n\nGlobal Retail Inc. is due to renew our enterprise contract (#ENT-GR-2022) next month. Our account manager quoted us $48,000/year for 500 seats, but the renewal invoice shows $62,400. This $14,400 discrepancy needs to be resolved urgently as our finance team needs the signed contract by end of Q1.\n\nSincerely,\nProcurement Department\nGlobal Retail Inc.",
+          "timestamp": "2024-03-10T11:00:00Z",
+          "metadata": {}
+        },
+        {
+          "message_id": "thread_003_b",
+          "sender": "support@ourplatform.com",
+          "subject": "Re: Enterprise contract renewal — pricing discrepancy",
+          "body": "Dear Procurement Team,\n\nWe've escalated this to our enterprise sales team. They'll reach out within 24 hours to resolve the pricing discrepancy.\n\nRegards,\nEnterprise Support",
+          "timestamp": "2024-03-10T13:00:00Z",
+          "metadata": {}
+        }
+      ],
+      "label": {
+        "customer_name": "Global Retail Inc. Procurement",
+        "issue_summary": "Enterprise renewal invoice shows $62,400 but account manager quoted $48,000 for 500 seats",
+        "product_mentioned": "Enterprise License",
+        "resolution_needed": "Correct invoice to reflect agreed-upon price of $48,000 before end of Q1",
+        "estimated_effort": "medium"
+      }
+    },
+    {
+      "thread": [
+        {
+          "message_id": "thread_004_a",
+          "sender": "jessica.tran@healthapp.io",
+          "subject": "HIPAA compliance documentation request",
+          "body": "Hi,\n\nWe are considering using your platform to store patient-related data. Our compliance officer Jessica Tran needs your HIPAA BAA (Business Associate Agreement) and SOC 2 Type II report before we can proceed with procurement. Please send these documents or let us know where we can access them.\n\nHealthApp Inc.",
+          "timestamp": "2024-03-13T10:30:00Z",
+          "metadata": {}
+        }
+      ],
+      "label": {
+        "customer_name": "Jessica Tran",
+        "issue_summary": "Customer requires HIPAA BAA and SOC 2 Type II documentation to evaluate platform for patient data storage",
+        "product_mentioned": "Enterprise Compliance",
+        "resolution_needed": "Provide HIPAA BAA and SOC 2 Type II report to compliance officer",
+        "estimated_effort": "quick"
+      }
+    },
+    {
+      "thread": [
+        {
+          "message_id": "thread_005_a",
+          "sender": "dev.ops@fintech-startup.com",
+          "subject": "SSO integration failing with Okta",
+          "body": "Hey,\n\nWe're trying to configure SSO using Okta for our team (fintech-startup.com, Enterprise plan). The SAML assertion is being rejected by your system with error: 'Invalid NameID format'. We've followed your documentation exactly. Our IdP is Okta with NameID format set to EmailAddress.\n\nThis is blocking our entire team from accessing the platform.",
+          "timestamp": "2024-03-12T16:45:00Z",
+          "metadata": {}
+        },
+        {
+          "message_id": "thread_005_b",
+          "sender": "support@ourplatform.com",
+          "subject": "Re: SSO integration failing with Okta",
+          "body": "Hello,\n\nThank you for the details. Can you share your Okta SAML metadata XML so we can review the configuration?\n\nThanks,\nTechnical Support",
+          "timestamp": "2024-03-12T17:30:00Z",
+          "metadata": {}
+        }
+      ],
+      "label": {
+        "customer_name": "fintech-startup.com DevOps",
+        "issue_summary": "Okta SAML SSO integration failing with Invalid NameID format error, blocking all team access",
+        "product_mentioned": "SSO Enterprise Integration",
+        "resolution_needed": "Fix SAML configuration to accept Okta EmailAddress NameID format",
+        "estimated_effort": "medium"
+      }
+    }
+  ],
+
+  "task3_respond": [
+    {
+      "thread": [
+        {
+          "message_id": "resp_001_a",
+          "sender": "robert.chen@enterprise-client.com",
+          "subject": "Unacceptable service disruption — demanding SLA credit",
+          "body": "To the Support Team,\n\nI am the CTO of Enterprise-Client Inc., a paying Enterprise customer (Contract #ENT-EC-0089, 200 seats, $120,000/year). Your platform was completely unavailable from 2:00 AM to 6:00 AM on March 12th — a 4-hour outage during our scheduled batch processing window.\n\nThis caused us to miss a critical regulatory reporting deadline, and we may face fines from our regulatory body. Your SLA guarantees 99.9% uptime, which means maximum allowable downtime is 8.7 hours per year. This single incident consumed nearly 50% of our annual allowance.\n\nI am demanding: (1) A full incident report, (2) SLA credit per our contract terms, (3) A written assurance that this will not recur, and (4) A dedicated account review call within 48 hours.\n\nIf these are not addressed promptly, we will be exploring alternative vendors.\n\nRobert Chen, CTO\nEnterprise-Client Inc.",
+          "timestamp": "2024-03-12T08:00:00Z",
+          "metadata": {"customer_id": "cust_ec089", "account_tier": "enterprise"}
+        }
+      ],
+      "customer_history": {
+        "customer_id": "cust_ec089",
+        "account_age_days": 847,
+        "total_orders": 0,
+        "open_tickets": 1,
+        "tier": "enterprise"
+      },
+      "policy_snippets": [
+        {
+          "title": "SLA Credit Policy",
+          "content": "Enterprise customers experiencing downtime exceeding 0.1% monthly uptime commitment are eligible for service credits: 1–4 hours: 10% monthly fee credit; 4–8 hours: 25% credit; 8+ hours: 50% credit. Credits are applied to the next billing cycle and must be requested within 30 days of incident."
+        },
+        {
+          "title": "Incident Response Policy",
+          "content": "For Severity-1 incidents (total service unavailability), we publish a detailed post-mortem within 5 business days including: root cause analysis, timeline of events, remediation steps taken, and preventive measures implemented."
+        },
+        {
+          "title": "Enterprise Escalation Policy",
+          "content": "Enterprise customers may request a dedicated account review call with their Account Manager and a Senior Technical Lead. These calls are typically scheduled within 2-3 business days. For critical escalations, same-day or next-day scheduling is available."
+        }
+      ],
+      "label": {
+        "key_issues": ["SLA breach acknowledgment", "SLA credit offer", "incident report commitment", "dedicated review call scheduling"],
+        "tone": "apologetic, professional, action-oriented",
+        "must_include": ["acknowledge the 4-hour outage", "apply SLA credit per policy", "commit to post-mortem", "schedule review call"],
+        "must_not_include": ["dismiss or minimize the impact", "make excuses", "deny the outage occurred"],
+        "escalate": true
+      }
+    },
+    {
+      "thread": [
+        {
+          "message_id": "resp_002_a",
+          "sender": "ana.silva@smallbiz.com",
+          "subject": "Accidentally deleted important project data",
+          "body": "Hi support,\n\nI made a terrible mistake. I was cleaning up old projects and accidentally deleted our entire 'Q4 Campaign' project which had months of work. It was deleted about an hour ago. There was no confirmation dialog — it just deleted everything. Is there any way to recover this data? Please, this is critical for our business.\n\nAna Silva\nSmall Business Owner",
+          "timestamp": "2024-03-14T11:30:00Z",
+          "metadata": {"customer_id": "cust_as77", "account_tier": "pro"}
+        }
+      ],
+      "customer_history": {
+        "customer_id": "cust_as77",
+        "account_age_days": 412,
+        "total_orders": 0,
+        "open_tickets": 0,
+        "tier": "pro"
+      },
+      "policy_snippets": [
+        {
+          "title": "Data Recovery Policy",
+          "content": "Pro and Enterprise customers benefit from daily automated backups with 30-day retention. Deleted projects can be restored from backup upon request. Recovery requests made within 24 hours of deletion have a 95%+ success rate. Requests should include the project name, approximate deletion time, and account email."
+        },
+        {
+          "title": "Restore Process",
+          "content": "Data restores typically take 1-4 hours depending on project size. The support team initiates the restore from the backup system. Customers are notified via email when the restore is complete. Note: any data created/edited in the project after the last backup snapshot will not be recovered."
+        }
+      ],
+      "label": {
+        "key_issues": ["data recovery", "reassurance", "set expectations on timeline"],
+        "tone": "empathetic, reassuring, clear",
+        "must_include": ["acknowledge distress", "explain Pro backup policy", "initiate recovery process", "set timeline expectation"],
+        "must_not_include": ["blame the customer", "say data is permanently lost without checking", "promise 100% recovery"],
+        "escalate": false
+      }
+    },
+    {
+      "thread": [
+        {
+          "message_id": "resp_003_a",
+          "sender": "billing@medgroup.org",
+          "subject": "Charged after cancellation confirmation — 3 months of charges",
+          "body": "Hello,\n\nWe cancelled our subscription on December 31, 2023 and received a cancellation confirmation email. Despite this, we have been charged for January ($299), February ($299), and March ($299) — a total of $897 in unauthorized charges.\n\nI have attached the cancellation confirmation email. This is unacceptable and constitutes unauthorized billing. We are requesting an immediate refund of $897 and written confirmation that our account is closed.\n\nMedGroup Billing Department",
+          "timestamp": "2024-03-15T09:00:00Z",
+          "metadata": {"customer_id": "cust_mg_org", "account_tier": "pro"}
+        }
+      ],
+      "customer_history": {
+        "customer_id": "cust_mg_org",
+        "account_age_days": 1203,
+        "total_orders": 0,
+        "open_tickets": 0,
+        "tier": "pro"
+      },
+      "policy_snippets": [
+        {
+          "title": "Refund Policy",
+          "content": "If a customer was charged after a valid cancellation, a full refund for all post-cancellation charges will be processed within 5-10 business days. Support agents should verify the cancellation date using the account management system and cross-reference with billing records before processing."
+        },
+        {
+          "title": "Cancellation Verification",
+          "content": "Customers should be requested to provide their cancellation confirmation email/ticket number. Support agents can verify in the system using the customer's account email or ID. Once verified, escalate to billing team with REFUND_VERIFIED tag for processing."
+        }
+      ],
+      "label": {
+        "key_issues": ["acknowledge unauthorized billing", "apologize", "commit to full $897 refund", "confirm account closure"],
+        "tone": "apologetic, professional, decisive",
+        "must_include": ["acknowledge the error", "commit to full refund amount ($897)", "provide refund timeline", "confirm account is closed"],
+        "must_not_include": ["question the validity of the cancellation without evidence", "offer partial refund", "ask them to wait without a clear timeline"],
+        "escalate": false
+      }
+    }
+  ]
+}

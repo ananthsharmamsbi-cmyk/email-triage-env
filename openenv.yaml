@@ -1,0 +1,177 @@
+openenv: "1.0"
+
+# ── Environment metadata ───────────────────────────────────────────────────
+name: email-triage-env
+display_name: "Customer Support Email Triage"
+version: "1.0.0"
+description: >
+  A real-world OpenEnv environment simulating the daily workflow of a
+  customer support team. An AI agent must triage incoming emails (classify
+  category and urgency), extract structured ticket metadata from email
+  threads, and draft professional responses to complex customer complaints.
+  Evaluation mirrors real KPIs used in support operations.
+tags:
+  - openenv
+  - customer-support
+  - email-triage
+  - nlp
+  - information-extraction
+  - generation
+
+author: "ScalarHackathon Team"
+license: "MIT"
+
+# ── Endpoint configuration ─────────────────────────────────────────────────
+api:
+  reset: POST /reset
+  step:  POST /step
+  state: GET  /state
+  tasks: GET  /tasks
+  health: GET /health
+  root:   GET /
+
+# ── Tasks ──────────────────────────────────────────────────────────────────
+tasks:
+  - id: email_classify
+    difficulty: easy
+    description: >
+      Classify each incoming email by category (billing / technical / shipping /
+      general / spam) and urgency (low / medium / high / critical).
+    episode_length: 5
+    score_range: [0.0, 1.0]
+    grader: environment/tasks/task1_classify.py
+    partial_credit: true
+    notes: "0.5 for category + up to 0.5 for urgency with ±1-tier partial credit"
+
+  - id: ticket_extraction
+    difficulty: medium
+    description: >
+      Extract 5 structured fields from a multi-message support thread:
+      customer_name, issue_summary, product_mentioned, resolution_needed,
+      estimated_effort.
+    episode_length: 3
+    score_range: [0.0, 1.0]
+    grader: environment/tasks/task2_extract.py
+    partial_credit: true
+    notes: "Token-overlap F1 for text fields; weighted sum across fields"
+
+  - id: response_drafting
+    difficulty: hard
+    description: >
+      Draft a complete, professional support response to a complex complaint,
+      given the email thread, customer account history, and relevant policy
+      snippets. Also write an internal CRM note and decide whether to escalate.
+    episode_length: 2
+    score_range: [0.0, 1.0]
+    grader: environment/tasks/task3_respond.py
+    partial_credit: true
+    notes: >
+      Composite score: 25% rule-based coverage of required elements,
+      50% LLM-judged quality (professionalism/empathy/accuracy/completeness),
+      25% structural quality checks.
+
+# ── Observation space ──────────────────────────────────────────────────────
+observation_space:
+  type: object
+  description: "Typed Pydantic model — shape varies per task"
+  common_fields:
+    - task: string   # active task ID
+    - step_index: integer
+    - total_steps: integer
+    - score_so_far: float
+
+  task_specific:
+    email_classify:
+      email:
+        message_id: string
+        sender: string
+        subject: string
+        body: string
+        timestamp: string
+        metadata: object
+
+    ticket_extraction:
+      thread:
+        type: array
+        items: EmailMessage  # same shape as email above
+
+    response_drafting:
+      thread: array[EmailMessage]
+      customer_history:
+        customer_id: string
+        account_age_days: integer
+        total_orders: integer
+        open_tickets: integer
+        tier: string  # free|pro|enterprise
+      policy_snippets:
+        type: array
+        items:
+          title: string
+          content: string
+
+# ── Action space ───────────────────────────────────────────────────────────
+action_space:
+  type: object
+  description: "Typed Pydantic model — shape depends on active task"
+
+  task_specific:
+    email_classify:
+      required:
+        - category: enum[billing, technical, shipping, general, spam]
+        - urgency:  enum[low, medium, high, critical]
+      optional:
+        - reasoning: string
+
+    ticket_extraction:
+      required:
+        - customer_name:     string
+        - issue_summary:     string
+        - product_mentioned: string
+        - resolution_needed: string
+        - estimated_effort:  enum[quick, medium, extensive]
+      optional:
+        - reasoning: string
+
+    response_drafting:
+      required:
+        - response_subject: string
+        - response_body:    string
+        - internal_note:    string
+        - escalate:         boolean
+      optional:
+        - reasoning: string
+
+# ── Reward structure ───────────────────────────────────────────────────────
+reward:
+  type: object
+  fields:
+    score:
+      type: float
+      range: [0.0, 1.0]
+      description: "Overall per-step score"
+    breakdown:
+      type: object
+      description: "Sub-scores and metadata per evaluation criterion"
+    penalty:
+      type: float
+      description: "Penalty applied for invalid or destructive actions"
+    message:
+      type: string
+      description: "Human-readable explanation of the score"
+
+# ── Episode boundaries ─────────────────────────────────────────────────────
+episode:
+  termination: "done=true when all scenarios in the batch are processed"
+  reset_semantics: "reset() accepts task and optional seed; returns first observation"
+  max_steps:
+    email_classify: 5
+    ticket_extraction: 3
+    response_drafting: 2
+
+# ── Infrastructure ─────────────────────────────────────────────────────────
+infrastructure:
+  port: 7860
+  runtime: python3.11
+  memory_requirement: "< 512 MB (no GPU required)"
+  docker: true
+  huggingface_space: true
